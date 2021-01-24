@@ -1,4 +1,5 @@
 using System;
+using Compl.CodeAnalysis.Syntax;
 
 namespace Compl.CodeAnalysis
 {

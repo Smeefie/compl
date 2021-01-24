@@ -1,4 +1,4 @@
-namespace Compl.CodeAnalysis
+namespace Compl.CodeAnalysis.Syntax
 {
     public enum SyntaxKind
     {

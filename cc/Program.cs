@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Compl.CodeAnalysis;
+using Compl.CodeAnalysis.Syntax;
 
 namespace Compl
 {
