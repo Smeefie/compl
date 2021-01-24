@@ -58,7 +58,7 @@ namespace Compl.CodeAnalysis
             _diagnostics.Add($"ERROR: Unexpected token <{Current.Kind}>, expected <{kind}>");
             return new SyntaxToken(kind, Current.Position, null, null);
         }
-        
+
         public SyntaxTree Parse()
         {
             var expression = ParseExpression();
@@ -70,10 +70,10 @@ namespace Compl.CodeAnalysis
         {
             var left = ParsePrimaryExpression();
 
-            while(true)
+            while (true)
             {
-                var precedence = GetBinaryOperatorPrecedence(Current.Kind);
-                if(precedence == 0 || precedence <= parentPrecendence)
+                var precedence = Current.Kind.GetBinaryOperatorPrecedence();
+                if (precedence == 0 || precedence <= parentPrecendence)
                     break;
 
                 var operatorToken = NextToken();
@@ -82,23 +82,6 @@ namespace Compl.CodeAnalysis
             }
 
             return left;
-        }
-
-        private static int GetBinaryOperatorPrecedence(SyntaxKind kind)
-        {
-            switch (kind)
-            {
-                case SyntaxKind.StarToken:
-                case SyntaxKind.SlashToken:
-                    return 2;
-                    
-                case SyntaxKind.PlusToken:
-                case SyntaxKind.MinusToken:
-                    return 1;
-
-                default:
-                    return 0;
-            }
         }
 
         private ExpressionSyntax ParsePrimaryExpression()
