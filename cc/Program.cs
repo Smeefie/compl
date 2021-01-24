@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Compl.CodeAnalysis;
+using Compl.CodeAnalysis.Binding;
 using Compl.CodeAnalysis.Syntax;
 
 namespace Compl
@@ -33,6 +34,10 @@ namespace Compl
                 }
 
                 var syntaxTree = SyntaxTree.Parse(line);
+                var binder = new Binder();
+                var BoundExpression = binder.BindExpression(syntaxTree.Root);
+
+                IReadOnlyList<string> diagnostics = syntaxTree.Diagnostics.Concat(binder.Diagnostics).ToArray();
 
                 if (showTree)
                 {
@@ -41,9 +46,9 @@ namespace Compl
                     Console.ResetColor();
                 }
 
-                if (!syntaxTree.Diagnostics.Any())
+                if (!diagnostics.Any())
                 {
-                    var e = new Evaluator(syntaxTree.Root);
+                    var e = new Evaluator(BoundExpression);
                     var result = e.Evaluate();
                     Console.WriteLine(result);
                 }
@@ -51,7 +56,7 @@ namespace Compl
                 {
                     Console.ForegroundColor = ConsoleColor.DarkRed;
 
-                    foreach (var diagnostic in syntaxTree.Diagnostics)
+                    foreach (var diagnostic in diagnostics)
                         Console.WriteLine(diagnostic);
 
                     Console.ResetColor();
