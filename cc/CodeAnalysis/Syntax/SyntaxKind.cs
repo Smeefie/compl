@@ -13,11 +13,16 @@ namespace Compl.CodeAnalysis.Syntax
         SlashToken,
         OpenParenthesisToken,
         CloseParenthesisToken,
+        IdentifierToken,
         
+        // Keywords
+        FalseKeyword,
+        TrueKeyword,
+
         // Expressions
         LiteralExpression,
         BinaryExpression,
         ParenthesizedExpression,
-        UnaryExpression
+        UnaryExpression,
     }
 }
